@@ -17,7 +17,7 @@ This can be run on any platform as long as the tokens are passed.
 
 ## Modules
 #### messages.py
-Contains functions that involve/support sending receiving messages to and from slack. 
+Contains functions that involve/support sending receiving messages to and from Slack. 
 
 #### regex.py
 A module that will perform regex lookups on text read from any channel the bot is in. 
