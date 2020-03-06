@@ -16,11 +16,11 @@ RUN yum install -y \
 
 COPY ./requirements.txt /tmp/requirements.txt
 RUN pip3 install -r /tmp/requirements.txt
-RUN mkdir /etc/pybot3
+RUN mkdir /etc/pybot
 
-COPY ./*.py /etc/pybot3/*.py
+COPY ./*.py /etc/pybot
 
-WORKDIR /etc/pybot3/
+WORKDIR /etc/pybot/
 USER pybot
 
 CMD ["python3", "./rtm.py"]
