@@ -1,0 +1,8 @@
+yit-bot/*
+scratch.txt
+venv/*
+venv
+yit-bot
+__pycache__
+.idea
+.DS_Store
