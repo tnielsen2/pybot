@@ -11,6 +11,10 @@ These two tokens are passed by environment variables as `USER_TOKEN` and `BOT_TO
 # Debugging
 Set the environment variable `DEBUG_ON` to `true` will log debug output for development. 
 
+# Branches
+`master` branch gets built and deployed in ECS with the `master` image tag.
+`develop` branch gets built and deployed in ECS with the `develop` tag. 
+
 # Running locally
 This can be run on any platform as long as the tokens are passed.
 `docker run --rm -d --e BOT_TOKEN='changeme' -e USER_TOKEN='changeme' yamtechnology/yit-pybot:latest`
