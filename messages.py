@@ -43,13 +43,23 @@ def get_channel_info(channel_id):
 
 ### Get channel members
 def get_channel_members(channel_id):
+    member_list = []
     client = slack.WebClient(token=bot_token)
     groups_list = client.groups_list(
     )
+    # Loop through groups first, if its a private channel, we can get the members of it with this method.
     for group in groups_list['groups']:
         if channel_id == group['id']:
-            members_list = group['members']
-            return members_list
+            member_list = group['members']
+    # If there are no groups, try the channel_info method instead
+    if member_list == []:
+        channel_info = client.channels_info(
+            channel=channel_id
+        )
+        member_list = channel_info['channel']['members']
+    return member_list
+
+
 
 ### Get workspace members
 def get_workspace_members():

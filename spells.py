@@ -48,7 +48,6 @@ def silence(**payload):
         # Set some function variables
         web_client = payload['web_client']
         channel_id = data['channel']
-        #channel_members = messages.get_channel_members(channel_id)
         # Debug printing
         if debug == 'true':
             print('DEBUG: silenced_user={}'.format(silenced_user))
