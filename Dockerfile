@@ -6,6 +6,7 @@ RUN groupadd pybot && \
 
 ENV USER_TOKEN ""
 ENV BOT_TOKEN ""
+ENV DEBUG_ON "false"
 
 RUN yum install -y \
       bash \

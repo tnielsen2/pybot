@@ -11,6 +11,10 @@ These two tokens are passed by environment variables as `USER_TOKEN` and `BOT_TO
 # Debugging
 Set the environment variable `DEBUG_ON` to `true` will log debug output for development. 
 
+# Running locally
+This can be run on any platform as long as the tokens are passed.
+`docker run --rm -d --e BOT_TOKEN='changeme' -e USER_TOKEN='changeme' yamtechnology/yit-pybot:latest`
+
 ## Modules
 #### messages.py
 Contains functions that involve/support sending receiving messages to and from slack. 
