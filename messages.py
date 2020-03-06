@@ -1,7 +1,5 @@
-# These are simple ways to send messagestest.py
 import os
 import slack
-import sys
 
 # Slack token is used for admin permissions that are not granted to bot users/apps. This is a "workspace token" from an
 # admin user
@@ -75,7 +73,6 @@ def get_user_id(username):
                 print('       Function: get_user_id')
                 print('       user_id={}'.format(user_id))
             return user_id
-
 
 ### In channel
 # Will return boolean value indicating if the user is in the channel or not based on username (not userid)
