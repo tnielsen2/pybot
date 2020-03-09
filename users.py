@@ -5,6 +5,7 @@ meme_council_ids = {
     'bmckendrick': 'U02H26SH1',
     'bshough': 'U5ZTWL0LV',
     'dalgarin': 'UT82EHTLZ',
+    'djoyce': 'U02GVHX3K',
     'jpobuda': 'U02HXC6U6',
     'lclabaugh': 'UDLV2JQNA',
     'thought': 'URW2FG4RH',
