@@ -30,7 +30,7 @@ A module that will perform regex lookups on text read from any channel the bot i
 This executes and runs the bot. 
 
 #### spells.py
-Wizardry. See the spells readme for more information.
+Wizardry. See the SPELLS.md for more information.
 
 ## Planned features
 * Jenkins build stats. Which jobs are failing. Daily/weekly summary. 
