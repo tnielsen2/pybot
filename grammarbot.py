@@ -9,7 +9,7 @@ from django.http import JsonResponse
 # Grammabot.io api key. Grammabot.io has a free, non api key limited to 100 uers per day. Default key should be XYZ
 grammarbot_token = os.getenv('GRAMMARBOT_TOKEN')
 
-# Transform a list of strings into a single string to be used in check_grammar
+# Transform a list of strings into a single string to be used in check_grammar 
 def serialize_list(list):
     z = 0
     str = ''
