@@ -47,26 +47,27 @@ def check_grammar(**payload):
         if response.status_code == 200:
             dict = response.json()
             matches = dict['matches']
-            messages.send_channel_message('You have {} grammar mistakes in the following text:'.format(str(len(matches))), channel_id)
-            messages.send_channel_message('"{}"'.format(text), channel_id)
-            x = 0
-            for error in matches:
-                x = x + 1
-                messages.send_channel_message('********** ERROR NUMBER {} **********'.format(str(x)), channel_id)
-                messages.send_channel_message('Found in the following sentence:', channel_id)
-                messages.send_channel_message('    "{}"'.format(error['sentence']), channel_id)
-                messages.send_channel_message('Error rule: {}'.format(error['rule']['description']), channel_id)
-                replacements = []
-                if error['shortMessage'] == 'Spelling mistake':
-                    for replacement in error['replacements']:
-                        replacements.append(replacement['value'])
-                    messages.send_channel_message('Suggestion: Learn to spell, or pay careful attention to the red line under what you type. '
-                          'Did you mean {}?'.format(serialize_list(replacements)), channel_id)
-                else:
-                    messages.send_channel_message('Suggestion: {}'.format(error['message']), channel_id)
-                print('')
-            x = 0
-            return response
+            if str(matches) != '0':
+                messages.send_channel_message('You have {} grammar mistakes in the following text:'.format(str(len(matches))), channel_id)
+                messages.send_channel_message('>{}'.format(text), channel_id)
+                x = 0
+                for error in matches:
+                    x = x + 1
+                    messages.send_channel_message('********** ERROR NUMBER {} **********'.format(str(x)), channel_id)
+                    messages.send_channel_message('Found in the following sentence:', channel_id)
+                    messages.send_channel_message('>{}'.format(error['sentence']), channel_id)
+                    messages.send_channel_message('Error rule: {}'.format(error['rule']['description']), channel_id)
+                    replacements = []
+                    if error['shortMessage'] == 'Spelling mistake':
+                        for replacement in error['replacements']:
+                            replacements.append(replacement['value'])
+                        messages.send_channel_message('Suggestion: Learn to spell, or pay careful attention to the red line under what you type. '
+                              'Did you mean `{}`?'.format(serialize_list(replacements)), channel_id)
+                    else:
+                        messages.send_channel_message('Suggestion: {}'.format(error['message']), channel_id)
+                    print('')
+                x = 0
+                return response
         else:
             data = {
                 'Error': 'Not 200'
