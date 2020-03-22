@@ -4,6 +4,7 @@ from slack import RTMClient
 # Import my own modules
 import regex
 import spells
+import grammarbot
 
 # Slack token is used for admin permissions that are not granted to bot users/apps. This is a "workspace token" from an
 # admin user
@@ -27,6 +28,8 @@ def pybot(**payload):
   regex.dmd(**payload)
   # Spell Functions
   spells.silence(**payload)
+  # Grammarbot
+  grammarbot.check_grammar(**payload)
 
 rtm_client = RTMClient(token=bot_token)
 rtm_client.start()
