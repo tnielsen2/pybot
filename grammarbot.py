@@ -6,11 +6,16 @@ from django.http import JsonResponse
 import messages
 import users
 
-## TO DO list:
-# Create main function to pull in channel, user and other data by means of decorator payload
-
-# Grammabot.io api key. Grammabot.io has a free, non api key limited to 100 uers per day. Default key should be XYZ
+# Grammabot.io api key. Grammabot.io has a free, non api key limited to 100 users per day.
 grammarbot_token = os.getenv('GRAMMARBOT_TOKEN')
+
+# Debugging environment variable.
+debug = os.getenv('DEBUG_ON').lower()
+
+# Global variables for spells
+grammarck_user = 'none'
+grammarck_user_id = 'none'
+grammarck_status = False
 
 # Transform a list of strings into a single string to be used in check_grammar
 def serialize_list(list):
@@ -47,7 +52,10 @@ def check_grammar(**payload):
         if response.status_code == 200:
             dict = response.json()
             matches = dict['matches']
-            if str(matches) != '0':
+            if debug == 'true':
+                print('DEBUG-Grammarbot-check_grammar: matches variable type:{}'.format(type(matches)))
+                print('DEBUG-Grammarbot-check_grammar: matches variable value:{}'.format(matches))
+            if matches != []:
                 messages.send_channel_message('You have {} grammar mistakes in the following text:'.format(str(len(matches))), channel_id)
                 messages.send_channel_message('>{}'.format(text), channel_id)
                 x = 0

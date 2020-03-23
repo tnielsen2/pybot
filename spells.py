@@ -94,6 +94,7 @@ def silence(**payload):
                     channel=channel_id,
                     text=f"<@{silenced_user}> is no longer silenced."
                 )
+            # If user is silenced, delete their message
             if data['user'] == silenced_user_id:
                 messages.delete_channel_message(data['ts'], data['channel'])
         # Cast silence, if you are a member of the meme council
