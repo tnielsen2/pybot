@@ -51,23 +51,31 @@ def check_grammar(**payload):
         # Allow meme council to disable grammarbot. If disabled, reset the status and users
         if ('!disable grammarbot' in data['text']) and (data['user'] in users.meme_council_ids.values()):
             grammarck_status = False
-            web_client.chat_postMessage(
-                channel=channel_id,
-                text=f"<@{grammarck_user}> is no longer being grammar checked."
-            )
-            grammarck_user = 'none'
+            if messages.in_channel(grammarck_user, channel_id):
+                web_client.chat_postMessage(
+                    channel=channel_id,
+                    text=f"<@{grammarck_user}> is no longer being grammar checked."
+                )
+                grammarck_user = 'none'
             grammarck_user_id = 'none'
         # Allow meme council to enable grammarbot.
         elif ('!enable grammarbot' in data['text']) and (data['user'] in users.meme_council_ids.values()):
-            grammarck_status = True
-            grammarck_user = 'drobertson'
-            grammarck_user_id = messages.get_user_id(grammarck_user)
+            if messages.in_channel(grammarck_user, channel_id):
+                grammarck_status = True
+                grammarck_user = 'drobertson'
+                grammarck_user_id = messages.get_user_id(grammarck_user)
+                web_client.chat_postMessage(
+                    channel=channel_id,
+                    text=f"<@{grammarck_user}> is now being grammar checked in every channel we share."
+                )
+        # Mock the user not in the meme council if tyring to enable grammarbot
+        elif ('!enable grammarbot' in data['text']) and (data['user'] not in users.meme_council_ids.values()):
             web_client.chat_postMessage(
                 channel=channel_id,
-                text=f"<@{grammarck_user}> is now being grammar checked in every channel we share."
+                text=f"<@{data['user']}> https://www.youtube.com/watch?v=fBGWtVOKTkM"
             )
-        # Mock the user not in the meme council
-        elif ('!enable grammarbot' in data['text']) and (data['user'] not in users.meme_council_ids.values()):
+        # Mock the user not in the meme council if tyring to disable grammarbot
+        elif ('!disable grammarbot' in data['text']) and (data['user'] not in users.meme_council_ids.values()):
             web_client.chat_postMessage(
                 channel=channel_id,
                 text=f"<@{data['user']}> https://www.youtube.com/watch?v=fBGWtVOKTkM"
