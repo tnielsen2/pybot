@@ -41,12 +41,13 @@ def check_grammar(**payload):
     global grammarck_user_id
     global grammarck_status
     data = payload['data']
-    web_client = payload['web_client']
-    channel_id = data['channel']
-    user_id = data['user']
-    channel_id = data['channel']
-    text = data['text']
+    if 'text' in data:
+        text = data['text']
     if 'user' in data:
+        web_client = payload['web_client']
+        channel_id = data['channel']
+        user_id = data['user']
+        channel_id = data['channel']
         # Allow meme council to disable grammarbot. If disabled, reset the status and users
         if ('!disable grammarbot' in data['text']) and (data['user'] in users.meme_council_ids.values()):
             grammarck_status = False
@@ -63,10 +64,16 @@ def check_grammar(**payload):
             grammarck_user_id = messages.get_user_id(grammarck_user)
             web_client.chat_postMessage(
                 channel=channel_id,
-                text=f"<@{grammarck_user}> <@{grammarck_user}> is now being grammar checked in every channel we share."
+                text=f"<@{grammarck_user}> is now being grammar checked in every channel we share."
+            )
+        # Mock the user not in the meme council
+        elif ('!enable grammarbot' in data['text']) and (data['user'] not in users.meme_council_ids.values()):
+            web_client.chat_postMessage(
+                channel=channel_id,
+                text=f"<@{data['user']}> https://www.youtube.com/watch?v=fBGWtVOKTkM"
             )
         else:
-            # Turn on grammarcheck is on and the user is in the channel, then grammar check them. 
+            # Turn on grammarcheck is on and the user is in the channel, then grammar check them.
             if (grammarck_status is True) and (messages.in_channel(grammarck_user, channel_id)):
                 # Set some function variables
                 # Create object from grammarbot api
