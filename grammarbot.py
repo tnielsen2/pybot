@@ -74,7 +74,7 @@ def check_grammar(**payload):
             )
         else:
             # Turn on grammarcheck is on and the user is in the channel, then grammar check them.
-            if (grammarck_status is True) and (messages.in_channel(grammarck_user, channel_id)):
+            if ((grammarck_status is True) and (messages.in_channel(grammarck_user, channel_id))) and (data['user'] == grammarck_user):
                 # Set some function variables
                 # Create object from grammarbot api
                 response = requests.post('http://api.grammarbot.io/v2/check', data={
