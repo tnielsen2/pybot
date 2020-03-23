@@ -89,15 +89,11 @@ def check_grammar(**payload):
                         print('DEBUG-Grammarbot-check_grammar: matches variable type:{}'.format(type(matches)))
                         print('DEBUG-Grammarbot-check_grammar: matches variable value:{}'.format(matches))
                     if matches != []:
-                        messages.send_channel_message('You have {} grammar mistakes in the following text:'.format(str(len(matches))), channel_id)
-                        messages.send_channel_message('>{}'.format(text), channel_id)
+                        messages.send_channel_message('You have {} grammar mistakes in the following text: `{}`'.format(str(len(matches)), text), channel_id)
                         x = 0
                         for error in matches:
                             x = x + 1
-                            messages.send_channel_message('********** ERROR NUMBER {} **********'.format(str(x)), channel_id)
-                            messages.send_channel_message('Found in the following sentence:', channel_id)
-                            messages.send_channel_message('>{}'.format(error['sentence']), channel_id)
-                            messages.send_channel_message('Error rule: {}'.format(error['rule']['description']), channel_id)
+                            messages.send_channel_message('>{} \n Error rule: {}'.format(error['sentence'], error['rule']['description']), channel_id)
                             replacements = []
                             if error['shortMessage'] == 'Spelling mistake':
                                 for replacement in error['replacements']:
