@@ -60,7 +60,7 @@ def check_grammar(**payload):
         # Allow meme council to enable grammarbot.
         elif ('!enable grammarbot' in data['text']) and (data['user'] in users.meme_council_ids.values()):
             grammarck_status = True
-            grammarck_user = 'tnielsen'
+            grammarck_user = 'drobertson'
             grammarck_user_id = messages.get_user_id(grammarck_user)
             web_client.chat_postMessage(
                 channel=channel_id,
