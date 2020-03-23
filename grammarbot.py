@@ -74,41 +74,44 @@ def check_grammar(**payload):
             )
         else:
             # Turn on grammarcheck is on and the user is in the channel, then grammar check them.
-            if ((grammarck_status is True) and (messages.in_channel(grammarck_user, channel_id))) and (data['user'] == grammarck_user):
-                # Set some function variables
-                # Create object from grammarbot api
-                response = requests.post('http://api.grammarbot.io/v2/check', data={
-                    'api_key': grammarbot_token,
-                    'language': 'en-US',
-                    'text': text
-                })
-                if response.status_code == 200:
-                    dict = response.json()
-                    matches = dict['matches']
-                    if debug == 'true':
-                        print('DEBUG-Grammarbot-check_grammar: matches variable type:{}'.format(type(matches)))
-                        print('DEBUG-Grammarbot-check_grammar: matches variable value:{}'.format(matches))
-                    if matches != []:
-                        messages.send_channel_message('You have {} grammar mistakes in the following text: `{}`'.format(str(len(matches)), text), channel_id)
-                        x = 0
-                        for error in matches:
-                            x = x + 1
-                            messages.send_channel_message('>{} \n Error rule: {}'.format(error['sentence'], error['rule']['description']), channel_id)
-                            replacements = []
-                            if error['shortMessage'] == 'Spelling mistake':
-                                for replacement in error['replacements']:
-                                    replacements.append(replacement['value'])
-                                messages.send_channel_message('Suggestion: Learn to spell, or pay careful attention to the red line under what you type. '
-                                      'Did you mean `{}`?'.format(serialize_list(replacements)), channel_id)
-                            else:
-                                messages.send_channel_message('Suggestion: {}'.format(error['message']), channel_id)
-                            print('')
-                        x = 0
-                        return response
-                else:
-                    data = {
-                        'Error': 'Not 200'
-                    }
-                    return JsonResponse(data)
+            if ((grammarck_status is True) and (messages.in_channel(grammarck_user, channel_id))):
+                if grammarck_user_id == data['user']:
+                    # Set some function variables
+                    # Create object from grammarbot api
+                    response = requests.post('http://api.grammarbot.io/v2/check', data={
+                        'api_key': grammarbot_token,
+                        'language': 'en-US',
+                        'text': text
+                    })
+                    if response.status_code == 200:
+                        dict = response.json()
+                        matches = dict['matches']
+                        if debug == 'true':
+                            print('DEBUG-Grammarbot-check_grammar: matches variable type:{}'.format(type(matches)))
+                            print('DEBUG-Grammarbot-check_grammar: matches variable value:{}'.format(matches))
+                        if matches != []:
+                            messages.send_channel_message('You have {} grammar mistakes in the following text: `{}`'.format(str(len(matches)), text), channel_id)
+                            x = 0
+                            for error in matches:
+                                x = x + 1
+                                quoted_message = '>Error rule: {}'.format(error['rule']['description'])
+                                replacements = []
+                                if error['shortMessage'] == 'Spelling mistake':
+                                    for replacement in error['replacements']:
+                                        replacements.append(replacement['value'])
+                                    quoted_message = quoted_message + '\n>Suggestion: Learn to spell, or pay careful attention to the red line under what you type.'
+                                    quoted_message = quoted_message + '\n>Did you mean `{}`?'.format(serialize_list(replacements))
+                                else:
+                                    quoted_message = quoted_message + '\n>Suggestion: {}'.format(error['message'])
+                                print('')
+                                messages.send_channel_message(quoted_message, channel_id)
+                                quoted_message = 'ch'
+                            x = 0
+                            return response
+                    else:
+                        data = {
+                            'Error': 'Not 200'
+                        }
+                        return JsonResponse(data)
     else:
         return None
