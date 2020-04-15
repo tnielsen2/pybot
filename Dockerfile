@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER YAM Technology <itsupport@yamholdings.com>
+MAINTAINER Trent Nielsen
 
 RUN groupadd pybot && \
     adduser pybot -g pybot
