@@ -17,7 +17,7 @@ Set the environment variable `DEBUG_ON` to `true` will log debug output for deve
 
 # Running locally
 This can be run on any platform as long as the tokens are passed.
-`docker run --rm -d --e BOT_TOKEN='changeme' -e USER_TOKEN='changeme' yamtechnology/yit-pybot:latest`
+`docker run --rm -d --e BOT_TOKEN='changeme' -e USER_TOKEN='changeme' pybot:`
 
 ## Modules
 #### messages.py
